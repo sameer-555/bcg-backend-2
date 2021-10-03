@@ -24,7 +24,7 @@ app.add_middleware(
     allow_credentials=True,
 )
 
-@app.get("/")
+@app.get("/api")
 def read_root(request: Request):
   from bson import json_util
   policies = db.BCG
@@ -59,7 +59,7 @@ def read_root(request: Request):
   return resp
 
 
-@app.get("/single")
+@app.get("/api/single")
 def get_single_res(request: Request):
   from bson import json_util
   from bson.objectid import ObjectId
@@ -68,7 +68,7 @@ def get_single_res(request: Request):
   res = policies.find_one({'_id': ObjectId(params['objID']) })
   return json.loads(json_util.dumps(res))
 
-@app.post("/update")
+@app.post("/api/update")
 async def get_body(request: Request):
   from bson import ObjectId
   updatedPolicy = await request.json()
@@ -83,7 +83,7 @@ async def get_body(request: Request):
   return "success"
 
 
-@app.get("/chart")
+@app.get("/api/chart")
 def get_chart_info(request: Request):
   params = request.query_params
   from bson import json_util
